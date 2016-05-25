@@ -8,7 +8,8 @@ import numpy as np
 import os
 import skimage.exposure
 from skimage.color import rgb2gray
-import math
+from face_detector import detect
+import matht
 
 class BokehDetector:
     """ボケ画像の判定を行います。
@@ -93,27 +94,13 @@ class BokehDetector:
         return lt+rt+lb+rb
 
 if __name__ == "__main__":
-    import skimage.io
-    import dlib
-    import pandas as pd
-    import time
-    result3 = pd.DataFrame()
-    detector = dlib.get_frontal_face_detector()
-    for i in range(1,910,1):
-        
-        #fname = sample_sep_video_dir+"frame"+str(i)+".jpg"
-        fname ="C:\\Users\\130350183\\Desktop\\test\\P4210129\\"+str(i).zfill(6)+".png"
-        fname ="C:\\Users\\130350183\\Desktop\\raw_movie\\P4210129\\frame"+str(i)+".jpg"
-        if not os.path.isfile(fname):
-            continue
-        
-        img = skimage.io.imread(fname)
-        dets = detector(img,0)
-        bd = BokehDetector()
-        for j, d in enumerate(dets):
-            start = time.time()
-            result = bd.getValue(img,d)
-            end = time.time()
-            result3 = result3.append(pd.DataFrame({"num":result},index=[fname]))
-            break
-    result3.to_csv("res6_jpg.csv")
+    fname ="C:\\Users\\120350181\\Desktop\\one_image\\Keishi_Ueda\\img\\e139.jpg"
+    img = cv2.imread(fname)
+    dets = detect(img)
+    bd = BokehDetector()
+    for j, d in enumerate(dets):
+        start = time.time()
+        result = bd.getValue(img,d)
+        end = time.time()
+        result3 = result3.append(pd.DataFrame({"num":result},index=[fname]))
+        break
