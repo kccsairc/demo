@@ -7,9 +7,9 @@
 import numpy as np
 import os
 import skimage.exposure
+import math
 from skimage.color import rgb2gray
 from face_detector import detect
-import matht
 
 class BokehDetector:
     """ボケ画像の判定を行います。
